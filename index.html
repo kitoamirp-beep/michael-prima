@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Michael Prima | CCTV & IT Technical Specialist | Onsite Infrastructure Expert</title>
+    <style>
+        /* =========================================
+           GLOBAL THEME & VARIABLES
+           ========================================= */
+        :root {
+            --bg-deep: #070a13;
+            --bg-card: #121826;
+            --bg-card-hover: #161e30;
+            --primary-blue: #2563eb;
+            --primary-blue-hover: #1d4ed8;
+            --primary-blue-glow: rgba(37, 99, 235, 0.5);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent-green: #10b981;
+            --border-color: rgba(255,255,255,0.06);
+            --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition-smooth); }
+        ul { list-style: none; }
+
+        /* =========================================
+           SCROLL-TRIGGERED ANIMATION BASE
+           ========================================= */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .animate-on-scroll.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        /* =========================================
+           NAVIGATION & HEADER
+           ========================================= */
+        @keyframes headerEntry {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border-color);
+            animation: headerEntry 0.8s ease forwards;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #fff, var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-contact {
+            display: flex;
+            gap: 20px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .header-contact a:hover { color: #fff; text-decoration: underline; }
+
+        .status-badge {
+            background: rgba(16, 185, 129, 0.08);
+            color: var(--accent-green);
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            position: relative;
+        }
+
+        @keyframes statusPulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            display: inline-block;
+            animation: statusPulse 2s infinite;
+        }
+
+        /* =========================================
+           HERO SECTION
+           ========================================= */
+        @keyframes heroTextEntry {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 60px;
+            padding: 100px 0;
+            align-items: center;
+        }
+
+        .hero-text {
+            animation: heroTextEntry 1s ease forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+            line-height: 1.05;
+            letter-spacing: -2px;
+        }
+
+        .hero h2 {
+            color: var(--primary-blue);
+            font-size: 1.3rem;
+            margin-bottom: 24px;
+            font-weight: 600;
+            border-left: 3px solid var(--primary-blue);
+            padding-left: 12px;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+            max-width: 90%;
+        }
+
+        .btn-group { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+
+        .btn {
+            background: var(--primary-blue);
+            color: #fff;
+            padding: 16px 36px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            text-align: center;
+        }
+
+        @keyframes btnShimmer {
+            0% { left: -100%; }
+            30% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 60%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+            animation: btnShimmer 5s infinite;
+            animation-delay: 2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px var(--primary-blue-glow);
+            background: var(--primary-blue-hover);
+        }
+
+        .hero-details-list {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            display: flex; gap: 30px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 30px;
+        }
+        .hero-details-list strong { color: #fff; font-size: 1.1rem; }
+
+        /* =========================================
+           ADVANCED HERO SLIDER
+           ========================================= */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-slider-wrapper {
+            position: relative;
+            animation: float 8s ease-in-out infinite;
+            animation-delay: 1s;
+        }
+
+        .hero-slider-container {
+            width: 100%;
+            height: 480px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+            background: var(--bg-card);
+            position: relative;
+        }
+
+        @keyframes sliderFade {
+            0%, 10% { opacity: 0; transform: scale(1.03); }
+            15%, 25% { opacity: 1; transform: scale(1); }
+            30%, 100% { opacity: 0; transform: scale(1.03); }
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: sliderFade 20s infinite;
+        }
+
+        .hero-slide:nth-child(1) { animation-delay: 0s; }
+        .hero-slide:nth-child(2) { animation-delay: 5s; }
+        .hero-slide:nth-child(3) { animation-delay: 10s; }
+        .hero-slide:nth-child(4) { animation-delay: 15s; }
+
+        .slider-overlay-text {
+            position: absolute;
+            bottom: 20px; left: 20px;
+            background: rgba(7, 10, 19, 0.8);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            z-index: 10;
+            border-left: 2px solid var(--accent-green);
+            backdrop-filter: blur(5px);
+            font-weight: 600;
+        }
+
+        /* =========================================
+           SECTION GENERAL
+           ========================================= */
+        section { padding: 80px 0; }
+
+        .section-header {
+            margin-bottom: 60px;
+            border-left: 4px solid var(--primary-blue);
+            padding-left: 20px;
+        }
+
+        .section-tag {
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -1.5px;
+        }
+
+        /* =========================================
+           TECHNICAL EXPERTISE
+           ========================================= */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .expertise-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expertise-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: var(--primary-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: var(--transition-smooth);
+        }
+
+        .expertise-card:hover {
+            transform: translateY(-10px);
+            background: var(--bg-card-hover);
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(37, 99, 235, 0.1) inset;
+        }
+
+        .expertise-card:hover::before { transform: scaleX(1); }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .expertise-card h3 {
+            margin-bottom: 16px;
+            color: #fff;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .expertise-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .expertise-list {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+        }
+        .expertise-list li { margin-bottom: 10px; display: flex; align-items: center; gap: 8px;}
+        .expertise-list li::before { content: '→'; color: var(--primary-blue); font-weight: 900;}
+
+        /* =========================================
+           FIELD DEPLOYMENTS
+           ========================================= */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+        }
+
+        .portfolio-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-color);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 30px rgba(37, 99, 235, 0.2);
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .img-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 40%;
+            background: linear-gradient(to top, var(--bg-card), transparent);
+        }
+
+        .portfolio-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .portfolio-card:hover img { transform: scale(1.1); }
+
+        .card-content {
+            padding: 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tag {
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .card-content h3 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            color: #fff;
+            letter-spacing: -0.5px;
+        }
+
+        .card-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .project-details {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            display: flex; gap: 15px; flex-wrap: wrap;
+        }
+        .project-details span { color: var(--text-muted); }
+        .project-details strong { color: #fff; }
+
+        /* =========================================
+           CONTACT FOOTER & BRAND CHAT BUTTONS
+           ========================================= */
+        footer {
+            padding: 100px 0 50px;
+            border-top: 1px solid var(--border-color);
+            background: #05070c;
+            text-align: center;
+        }
+
+        .footer-content h2 { font-size: 3rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -2px; }
+        .footer-content p { color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; font-size: 1.1rem;}
+
+        /* Custom Social/Chat Brands Button Colors */
+        .btn-messenger { background: #006aff; }
+        .btn-messenger:hover { background: #0056ce; box-shadow: 0 12px 24px rgba(0, 106, 255, 0.4); }
+
+        .btn-whatsapp { background: #25d366; }
+        .btn-whatsapp:hover { background: #1ebd55; box-shadow: 0 12px 24px rgba(37, 211, 102, 0.4); }
+
+        .copyright {
+            margin-top: 80px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           RESPONSIVE DESIGN
+           ========================================= */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; text-align: center; gap: 50px; padding: 60px 0; }
+            .hero h1 { font-size: 3.2rem; }
+            .hero h2 { border-left: none; border-bottom: 3px solid var(--primary-blue); padding: 0 0 10px 0; display: inline-block; }
+            .hero p { max-width: 100%; margin: 0 auto 30px; }
+            .btn-group { justify-content: center; }
+            .hero-details-list { justify-content: center; }
+            .hero-slider-container { height: 380px; }
+            .section-title { font-size: 2.4rem; }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 0 20px; }
+            header { flex-direction: column; gap: 15px; text-align: center; }
+            .header-contact { flex-direction: column; gap: 8px; }
+            .hero h1 { font-size: 2.6rem; letter-spacing: -1px; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .expertise-grid { grid-template-columns: 1fr; }
+            .footer-content h2 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- NAVIGATION/HEADER -->
+    <header>
+        <div class="logo">MICHAEL PRIMA</div>
+        <div class="header-contact">
+            <span>Email: <a href="mailto:Kitoamirp@gmail.com">Kitoamirp@gmail.com</a></span>
+            <span>Phone: <a href="tel:+639920605211">+63 992 060 5211</a></span>
+        </div>
+        <div class="status-badge">Available for Projects</div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-text">
+            <span class="section-tag">Infrastructure Specialist</span>
+            <h1>Michael Prima</h1>
+            <h2>I.T Technical Specialist | CCTV Infrastructure Expert | Onsite Operations</h2>
+            <p>Results-driven technical professional specializing in end-to-end CCTV implementation, enterprise network topology setups, complex hardware diagnostics, and secure client-side systems configurations. Proven expertise in rock-solid field deployments and high-efficiency technical operations.</p>
+            <div class="btn-group">
+                <!-- Smooth scrolls directly down to contact tools -->
+                <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Get In Touch</button>
+                <a href="#deployments" style="color: var(--text-muted); font-size: 0.9rem; font-weight: 600;">View Deployments →</a>
+            </div>
+            
+            <div class="hero-details-list">
+                <div><strong>5+ Years</strong><br>Experience</div>
+                <div><strong>100+ Nodes</strong><br>Largest Setup</div>
+                <div><strong>Industrial / Commercial</strong><br>Specialization</div>
+            </div>
+        </div>
+        
+        <!-- ANIMATED HERO SLIDER -->
+        <div class="hero-slider-wrapper">
+            <div class="hero-slider-container">
+                <div class="slider-overlay-text">● Live Onsite Field Operations</div>
+                <img class="hero-slide" src="FB_IMG_1780279209217.jpg" alt="Active NVR Configuration and Testing">
+                <img class="hero-slide" src="Messenger_creation_A1B36857-15AE-43C8-92B2-49DE32E1A1BD.jpeg" alt="Ceiling Cable Management and Node Routing">
+                <img class="hero-slide" src="Messenger_creation_9127DB45-8981-4E1F-A99C-7AD07A43F4F2.jpeg" alt="Outdoor Camera Mounting and Weatherproofing">
+                <img class="hero-slide" src="Messenger_creation_93215F59-D067-49FD-AE74-FDC4178540F5.jpeg" alt="IT Server Panel Termination and Organization">
+            </div>
+        </div>
+    </section>
+
+    <!-- TECHNICAL EXPERTISE -->
+    <section id="expertise">
+        <div class="section-header animate-on-scroll">
+            <span class="section-tag">Core Competencies</span>
+            <h2 class="section-title">Technical Expertise</h2>
+        </div>
+        
+        <div class="expertise-grid">
+            <div class="expertise-card animate-on-scroll delay-1">
+                <span class="card-icon">📹</span>
+                <h3>CCTV & Surveillance Design</h3>
+                <p>Comprehensive design and deployment of standalone and enterprise network CCTV installations. Proficient in configuration setups for NVR, DVR, IP cameras, and multi-stream storage architectures.</p>
+                <ul class="expertise-list">
+                    <li>System Architecture Design</li>
+                    <li>NVR/DVR Configuration (multi-brand)</li>
+                    <li>IP Camera Initialization & Subnetting</li>
+                    <li>Storage & RAID Setup</li>
+                </ul>
+            </div>
+            
+            <div class="expertise-card animate-on-scroll delay-2">
+                <span class="card-icon">🌐</span>
+                <h3>Network Administration</h3>
+                <p>Expertise in LAN/WLAN routing, strategic structural data cabling termination, TCP/IP network diagnostics, and managed hardware switch integrations for seamless connectivity.</p>
+                <ul class="expertise-list">
+                    <li>LAN/VLAN Routing & Segmentation</li>
+                    <li>Strategic Switch & Router Integration</li>
+                    <li>Structural Data Cabling (Cat6/Cat6a)</li>
+                    <li>Network Handshake Diagnostics</li>
+                </ul>
+            </div>
+            
+            <div class="expertise-card animate-on-scroll delay-3">
+                <span class="card-icon">🛠️</span>
+                <h3>Tech Support & Operations</h3>
+                <p>Advanced operating system troubleshooting, real-time onsite surveillance monitoring, radio dispatch coordination, hardware maintenance, and reliable client-side resolution mapping.</p>
+                <ul class="expertise-list">
+                    <li>OS Diagnostics & Resolution</li>
+                    <li>Real-time Surveillance Monitoring</li>
+                    <li>Hardware Testing & Replacement</li>
+                    <li>Active Resolution Mapping</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FIELD DEPLOYMENTS -->
+    <section id="deployments">
+        <div class="section-header animate-on-scroll">
+            <span class="section-tag">Verified Proof</span>
+            <h2 class="section-title">Field Deployments</h2>
+        </div>
+        
+        <div class="portfolio-grid">
+            <div class="portfolio-card animate-on-scroll delay-1">
+                <div class="img-container">
+                    <img src="FB_IMG_1780279078527.jpg" alt="Commercial Site CCTV Installation on Scaffolding">
+                </div>
+                <div class="card-content">
+                    <span class="tag">ONSITE DEPLOYMENT</span>
+                    <h3>Commercial Infrastructure Routing</h3>
+                    <p>Execution of high-elevation drop cabling and hardware mounting utilizing advanced scaffolding setups for commercial fueling stations. Focus on weatherproofing and stable mounts.</p>
+                    <div class="project-details">
+                        <span>Hardware:</span> <strong>IP Cameras, Cat6</strong>
+                        <span>Scope:</span> <strong>High Elevation, Scaffolding</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-card animate-on-scroll delay-2">
+                <div class="img-container">
+                    <img src="FB_IMG_1780279191301.jpg" alt="Industrial Warehouse CCTV Deployment on Ladder">
+                </div>
+                <div class="card-content">
+                    <span class="tag">STRUCTURAL CABLING</span>
+                    <h3>Industrial Warehouse Deployment</h3>
+                    <p>Strategic camera placement, wiring, and network node routing in high-clearance industrial storage facilities. Managed cable tray integration and device mounting.</p>
+                    <div class="project-details">
+                        <span>Hardware:</span> <strong>NVR, IP Cameras</strong>
+                        <span>Scope:</span> <strong>Industrial Cable Routing</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-card animate-on-scroll delay-3">
+                <div class="img-container">
+                    <img src="FB_IMG_1780279176458.jpg" alt="NVR System Monitoring and Subnet Mapping">
+                </div>
+                <div class="card-content">
+                    <span class="tag">SYSTEM INITIALIZATION</span>
+                    <h3>NVR System Monitor Config</h3>
+                    <p>Complete multi-channel NVR setup, subnet mapping, dedicated IP assignments, and target detection calibration for large-scale enterprise vehicle yards.</p>
+                    <div class="project-details">
+                        <span>Systems:</span> <strong>NVR firmware, LAN</strong>
+                        <span>Scope:</span> <strong>IP Mapping, Calibrations</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-card animate-on-scroll delay-4">
+                <div class="img-container">
+                    <img src="FB_IMG_1780328000416.jpg" alt="Active Surveillance Monitoring and Onsite Dispatch">
+                </div>
+                <div class="card-content">
+                    <span class="tag">TECH SUPPORT & OPERATOR</span>
+                    <h3>Active Surveillance Operations</h3>
+                    <p>Real-time onsite matrix monitoring, two-way radio dispatch coordination, active system troubleshooting, and direct client tech resolution mapping during operations.</p>
+                    <div class="project-details">
+                        <span>Operations:</span> <strong>Dispatch, Matrix View</strong>
+                        <span>Scope:</span> <strong>Onsite Operator Support</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT FOOTER -->
+    <footer id="contact">
+        <div class="container footer-content animate-on-scroll">
+            <span class="section-tag">Next Steps</span>
+            <h2>Let's build reliable infrastructure.</h2>
+            <p>Ready to discuss your next technical deployment, network setup, or CCTV project. Click any option below to reach me instantly:</p>
+            
+            <div class="btn-group" style="justify-content: center;">
+                <a href="mailto:Kitoamirp@gmail.com" class="btn">Email Me Directly</a>
+                <a href="https://m.me/Kenzjiken" target="_blank" class="btn btn-messenger">Chat on Messenger</a>
+                <a href="https://wa.me/639920605211" target="_blank" class="btn btn-whatsapp">Chat on WhatsApp</a>
+            </div>
+            
+            <p class="copyright">&copy; 2026 Michael Prima. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</div>
+
+<!-- SCROLL-TRIGGERED ANIMATIONS LOGIC -->
+<script>
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    const hiddenElements = document.querySelectorAll('.animate-on-scroll');
+    hiddenElements.forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>
